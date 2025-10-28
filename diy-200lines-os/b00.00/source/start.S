@@ -27,7 +27,17 @@ _start: 	//0x7c00  引导扇区的起始地址
 	mov $_start, %esp   //设置堆栈指针
 
 
+read_self_all:
+	mov $0x7E00, %bx   //源地址
+	mov $0x2, %cx   //段地址
+	mov $0x240, %ax   //字节数
+	mov $0x80, %dx   //驱动器号
+	int $0x13
+	jc read_self_all  //如果有错误，重新读取
+
 	jmp .
 
 	.org 0x1fe   //510
 	.byte 0x55 ,	0xaa  //引导扇区的结束标志0xAA55
+
+	.fill 64*1024, 1 , 0x35   //填充到64KB
