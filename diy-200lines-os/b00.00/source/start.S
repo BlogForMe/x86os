@@ -17,5 +17,17 @@
 
 	// 以下是代码区
  	.text
-_start: 
+_start: 	//0x7c00  引导扇区的起始地址
+	mov $0, %ax
+	mov %ax, %ds
+	mov %ax, %es
+	mov %ax, %ss
+	mov %ax, %gs
+	mov %ax, %fs
+	mov $_start, %esp   //设置堆栈指针
+
+
 	jmp .
+
+	.org 0x1fe   //510
+	.byte 0x55 ,	0xaa  //引导扇区的结束标志0xAA55
