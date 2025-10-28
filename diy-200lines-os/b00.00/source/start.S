@@ -28,7 +28,7 @@ _start: 	//0x7c00  引导扇区的起始地址
 
 
 read_self_all:
-	mov $0x7E00, %bx   //源地址
+	mov $_start_32, %bx   //源地址
 	mov $0x2, %cx   //段地址
 	mov $0x240, %ax   //字节数
 	mov $0x80, %dx   //驱动器号
@@ -40,4 +40,5 @@ read_self_all:
 	.org 0x1fe   //510
 	.byte 0x55 ,	0xaa  //引导扇区的结束标志0xAA55
 
+_start_32: 	//0x8000  32位代码的起始地址
 	.fill 64*1024, 1 , 0x35   //填充到64KB
