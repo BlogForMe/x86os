@@ -13,6 +13,21 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned int uint32_t;
 
+
+#define PDE_P  (1<<0)
+#define PDE_W  (1<<1)
+#define PDE_U  (1<<2)   
+#define PED_PS (1<<7)
+
+uint32_t pg_dir[1024] __attribute__((aligned(4096))) = {
+    [0] = (0x00000000 | PDE_P | PDE_W | PDE_U | PED_PS), //0~4MB
+    [768] = (0x00000000 | PDE_P | PDE_W | PDE_U | PED_PS), //3GB~3GB+4MB
+}
+
+
+
+
+
 struct {uint16_t limit_l,base_l,basehl_attr,base_limit;}gdt_table[256] __attribute__((aligned(8))) =
 {
     [KERNEL_CODE_SEG / 8] = {0xFFFF,0x0000,0x9A00,0x00CF},
